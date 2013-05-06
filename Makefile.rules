@@ -1,0 +1,8 @@
+CXXOBJ = $(subst .cpp,.o,$(subst .cc,.o,$(CXXSRC)))
+
+.cc.o:
+	$(CXX) $(INCLUDES) -c $< $(CXXFLAG)
+.cpp.o:
+	$(CXX) $(INCLUDES) -c $< $(CXXFLAG)
+
+.PHONY:clean

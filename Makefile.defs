@@ -1,0 +1,15 @@
+CXX = g++ 
+#CXX = clang++
+
+ifndef MODE
+  MODE=prof
+endif
+ifeq ($(MODE),prof)
+  CXXFLAG = -O3 -pg -Wall
+endif
+ifeq ($(MODE),opt)
+  CXXFLAG = -O5 -march=native -Wall
+endif
+ifndef CXXFLAG
+  CXXFLAG = -O3 -pg -Wall
+endif
