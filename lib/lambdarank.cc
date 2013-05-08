@@ -232,9 +232,9 @@ int LambdaRank::Train(const rank_data &data) {
         double t = sigma * (score_vec[i] - score_vec[j]);
         if (t > 35.0) { // This is magic number...
           double et = exp(-t);
-          lambda_ij = -(sigma * et) / (1.0 + et);
+          lambda_ij = (sigma * et) / (1.0 + et);
         } else {
-          lambda_ij = -sigma / (1.0 + exp(t));
+          lambda_ij = sigma / (1.0 + exp(t));
         }
 
         lambda_vec[i] += lambda_ij * fabs(delta);
@@ -249,7 +249,7 @@ int LambdaRank::Train(const rank_data &data) {
         for (size_t j = 0; j < qdata[i].second.size(); ++j) {
           int   f = (qdata[i].second)[j].first;
           float v = (qdata[i].second)[j].second;
-          w_vec_[f - 1] -= coef * v;
+          w_vec_[f - 1] += coef * v;
         }
       }
 

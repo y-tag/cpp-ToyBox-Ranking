@@ -28,6 +28,8 @@ void copy_and_sort_by_label(
   sort_index_vec->clear();
   std::vector<std::pair<int, int> > index_label_vec;
 
+  srand(1000);
+
   for (size_t q = 0; q < data.size(); ++q) {
     const toybox::ranking::query_data &qdata = data[q];
     index_label_vec.clear();
@@ -39,6 +41,7 @@ void copy_and_sort_by_label(
         }
       }
     }
+    std::random_shuffle(index_label_vec.begin(), index_label_vec.end());
     std::sort(
         index_label_vec.begin(), index_label_vec.end(), second_greater_than);
 

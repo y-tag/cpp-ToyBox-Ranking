@@ -5,6 +5,7 @@ include $(SRCTOP)/Makefile.defs
 CXXSRC = ranksvm.cc \
 		 ranknet.cc \
 		 lambdarank.cc \
+		 listnet.cc \
 		 listmle.cc \
 		 svmlight_reader.cc \
 

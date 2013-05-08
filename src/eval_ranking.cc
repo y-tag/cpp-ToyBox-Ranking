@@ -1,6 +1,7 @@
 #include "ranksvm.h"
 #include "ranknet.h"
 #include "lambdarank.h"
+#include "listnet.h"
 #include "listmle.h"
 #include "svmlight_reader.h"
 
@@ -41,12 +42,14 @@ int main(int argc, char **argv) {
   float C = 1.0f;
   //float eta0 = 0.001;
   //float eta0 = 0.01;
+  //float eta0 = 0.1;
   float eta0 = 0.1;
   int T = 10;
 
   //toybox::ranking::RankSVM ranking(C);
   //toybox::ranking::RankNet ranking(eta0);
   //toybox::ranking::LambdaRank ranking(T, eta0);
+  //toybox::ranking::ListNet ranking(eta0);
   toybox::ranking::ListMLE ranking(eta0);
 
   std::map<int, int> qid_index_map; 
