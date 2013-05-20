@@ -1,6 +1,7 @@
 #include "ranksvm.h"
 #include "ranknet.h"
 #include "lambdarank.h"
+#include "lambdamart.h"
 #include "listnet.h"
 #include "listmle.h"
 #include "svmlight_reader.h"
@@ -12,6 +13,8 @@
 
 #include <vector>
 #include <map>
+
+//#include <google/profiler.h>
 
 int main(int argc, char **argv) {
 
@@ -34,23 +37,37 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  int ret = 0;
   std::vector<std::pair<int, float> > x;
   int y = 0;
   int qid = 0;
 
+  /*
   float C = 1.0f;
   //float eta0 = 0.001;
   //float eta0 = 0.01;
   //float eta0 = 0.1;
-  float eta0 = 0.1;
+  float eta0 = 0.05;
   int T = 10;
 
   //toybox::ranking::RankSVM ranking(C);
   //toybox::ranking::RankNet ranking(eta0);
-  //toybox::ranking::LambdaRank ranking(T, eta0);
+  toybox::ranking::LambdaRank ranking(T, eta0);
   //toybox::ranking::ListNet ranking(eta0);
-  toybox::ranking::ListMLE ranking(eta0);
+  //toybox::ranking::ListMLE ranking(eta0);
+  */
+
+
+  int T = 10;
+  int tree_num = 10;
+  float eta0 = 0.05;
+  int leaf_num = 7;
+  float min_leaf_instance_rate = 0.0025;
+  float data_sampling_rate = 1.0;
+  float feature_sampling_rate = 1.0;
+  bool is_feature_sampling_randomized = false;
+  toybox::ranking::LambdaMART ranking(
+      T, tree_num, eta0, leaf_num, min_leaf_instance_rate,
+      data_sampling_rate, feature_sampling_rate, is_feature_sampling_randomized);
 
   std::map<int, int> qid_index_map; 
   toybox::ranking::rank_data train_data;
@@ -78,7 +95,9 @@ int main(int argc, char **argv) {
   }
   */
 
+  //ProfilerStart ("prof.out");
   ranking.Train(train_data);
+  //ProfilerStop ();
 
   while (test_reader.Read(&x, &y, &qid) == 1) {
     float predicted_value = ranking.Predict(x);

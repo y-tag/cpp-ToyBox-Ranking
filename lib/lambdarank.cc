@@ -109,9 +109,11 @@ double calc_delta_dcg(
   int rankj  = rank_label_vec[j].first;
   int labelj = rank_label_vec[j].second;
 
-  double delta1 = pow(2.0, labeli) - pow(2.0, labelj);
-  double delta2 = ((ranki <= T) ? (1.0 / log2(ranki + 1)) : 0.0);
-  delta2 -= ((rankj <= T) ? (1.0 / log2(rankj + 1)) : 0.0);
+  int pow2_array[] = {0, 1, 3, 7, 15, 31};
+  double delta1 = pow2_array[labeli] - pow2_array[labelj];
+  //double delta2 = ((ranki <= T) ? (1.0 / log2(ranki + 1)) : 0.0);
+  //delta2 -= ((rankj <= T) ? (1.0 / log2(rankj + 1)) : 0.0);
+  double delta2 = 1.0 / log2(ranki + 1) - 1.0 / log2(rankj + 1);
 
   return delta1 * delta2;
 }
